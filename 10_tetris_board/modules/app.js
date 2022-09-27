@@ -5,7 +5,7 @@ import { Loop } from './loop.js'
 class App {
   constructor(container) {
     this.layer = new Layer(container);
-    this.keyboard = new KeyControls([`KeyA`, `KeyS`, `KeyD`, `Space`]);
+    this.keyboard = new KeyControls([`KeyA`, `KeyS`, `KeyD`, `KeyW`]);
     this.keys = this.keyboard.keys;
 
     this.rect = {
@@ -13,8 +13,8 @@ class App {
       y: 0,
       w: 20,
       h: 20,
-      vx: 700,
-      vy: 0,
+      vx: 20,
+      vy: 20,
       
       isAir: true,
       color: `orange`,
@@ -24,12 +24,14 @@ class App {
 
     new Loop(this.update.bind(this), this.display.bind(this));
   }
-  update(correction) {
+  update() {
     
 
-    if (this.keys.KeyD) { this.rect.x += this.rect.vx * correction }
-    if (this.keys.KeyA) { this.rect.x -= this.rect.vx * correction }
-
+    if (this.keys.KeyD) { this.rect.x += this.rect.vx }
+    if (this.keys.KeyA) { this.rect.x -= this.rect.vx }
+    if (this.keys.KeyS) { this.rect.y += this.rect.vy }
+    if (this.keys.KeyW) { this.rect.y -= this.rect.vy }
+    /*
     //падение
     if (this.rect.isAir) {
       this.rect.vy += this.rect.gravity * correction
@@ -37,10 +39,11 @@ class App {
       this.rect.vy = 0
     }
     this.rect.y += this.rect.vy
+    */
      //ограничение на нижниюю грань
     if (this.rect.y + this.rect.h >= this.layer.h) {
       this.rect.y = this.layer.h - this.rect.h;
-      this.rect.isAir = false
+      //this.rect.isAir = false
     }
     if (this.rect.x + this.rect.w >= this.layer.w) {
       this.rect.x = this.layer.w - this.rect.w;
