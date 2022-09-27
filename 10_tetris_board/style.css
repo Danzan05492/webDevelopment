@@ -1,0 +1,20 @@
+body {
+  background: #1e1e29;
+  color: rgb(255, 255, 255);
+  font-family: sans-serif;
+  font-size: 2em;
+  text-align: center;
+}
+
+canvas {
+  border: solid .2em rgb(0, 0, 0);
+  height: 80vh;
+}
+
+div#display {
+  font-size: .5em !important;
+}
+
+#instruction {
+  font-size: .3em !important;
+}

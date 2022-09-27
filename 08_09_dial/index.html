@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Walking sprite</title>
+<style>
+    canvas {
+        border: 1px solid rgb(24, 17, 95);
+        display: block;
+        margin: 0 auto;
+    }
+    body {
+    color: #222;
+    background: #fff;
+    }
+    body.dark-theme {
+    color: #eee;
+    background: #121212;
+}
+</style>
+</head>
+<body>
+<button class="btn-toggle">Переключатель тёмной темы</button>
+<canvas id="canvas" height="600" width="600"></canvas>
+<script type="text/javascript">
+function clockPainting() {
+    var now = new Date();
+    var sec = now.getSeconds();
+    var min = now.getMinutes();
+    var hr = now.getHours();
+  
+    var ctx = document.getElementById("canvas").getContext("2d");
+    ctx.save(); // помещаем текущий контекст в стэк
+  
+    ctx.clearRect(0, 0, 600, 600);
+    ctx.translate(300, 300);
+    ctx.scale(1, 1);
+    ctx.rotate(-Math.PI / 2);
+  
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "red";
+    ctx.lineWidth = 8;
+    ctx.lineCap = "round";
+  
+    ctx.save();
+    ctx.beginPath();
+  
+    // рисуем деления часов
+    /*
+    for (var i = 0; i < 12; i++) {
+      ctx.rotate(Math.PI / 6);
+      ctx.moveTo(100, 0);
+      ctx.lineTo(120, 0);
+    }
+    ctx.stroke();
+    */
+  
+    // рисуем статичный циферблат
+    var ang;
+    var radius = 250;
+    ctx.rotate(Math.PI / 2);
+    ctx.font = radius * 0.25 + "px arial";
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    for (var num = 1; num < 13; num++) {
+      ang = num * (Math.PI / 6);
+      ctx.rotate(ang);
+      ctx.translate(0, -radius);
+      ctx.rotate(-ang);
+      ctx.fillStyle = "lightgrey";
+      ctx.fillText((num).toString(), 3, 5);
+      ctx.fillStyle = "red";
+      ctx.fillText((num).toString(), 0, 0);
+      ctx.rotate(ang);
+      ctx.translate(0, radius);
+      ctx.rotate(-ang);
+    }
+  
+    ctx.stroke(); // нарисовали то, что ранее описали
+    ctx.restore(); // достаем последний сохраненный контекст из стэка
+  
+    ctx.save();
+    // рисуем часовую стрелку, вращая холст
+    ctx.rotate((Math.PI / 6) * hr +
+      (Math.PI / 360) * min +
+      (Math.PI / 21600) * sec);
+    ctx.lineWidth = 14;
+  
+    ctx.beginPath();
+    ctx.moveTo(-20, 0);
+  
+    // линия почти до часовых меток
+    ctx.lineTo(115, 0);
+    ctx.stroke();
+    ctx.restore();
+  
+    ctx.save();
+  
+    // минутная стрелка
+    ctx.rotate((Math.PI / 30 * min) +
+      (Math.PI / 1800) * sec);
+    ctx.lineWidth = 10;
+  
+    ctx.beginPath();
+    ctx.moveTo(-28, 0);
+    ctx.lineTo(160, 0);
+    ctx.stroke();
+    ctx.restore();
+  
+    ctx.save();
+  
+    // секундная стрелка
+    ctx.rotate(sec * Math.PI / 30);
+    ctx.strokeStyle = "#D40000"; // цвет контура
+    ctx.fillStyle = "#D40000";
+    ctx.lineWidth = 4;
+  
+    ctx.beginPath();
+    ctx.moveTo(-30, 0);
+    ctx.lineTo(170, 0);
+    ctx.stroke();
+    ctx.restore();
+  
+    ctx.restore();
+  }
+  window.onload = function() {
+    setInterval(clockPainting, 1000); // функция, перерисовывающая часы
+    //через равные промежутки времени
+  }
+  // Выбираем кнопку
+const btn = document.querySelector(".btn-toggle");
+// Отслеживаем щелчок по кнопке
+btn.addEventListener("click", function () {
+  // Затем переключаем (добавляем/удаляем) класс .dark-theme для body
+  document.body.classList.toggle("dark-theme");
+});
+</script>
+</body>
+</html>

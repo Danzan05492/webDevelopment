@@ -1,0 +1,36 @@
+<html>
+<head>
+	<title>Подсчёт суммы двух чисел</title>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+</head>
+<body>
+
+<h1>Подсчёт суммы двух чисел</h1>
+<hr>
+
+<form onsubmit="return false">
+<input type="text" id="num-a" value="5">
+<input type="text" id="num-b" value="4">
+<button type="submit" onclick="getSum()">Посчитать сумму</button>
+<!--\\ button[type=submit][onclick=getSum()]>{Посчитать сумму} -->
+</form>
+	
+<script>
+
+function getSum() {
+    var inputA = document.getElementById('num-a');
+    var inputB = document.getElementById('num-b');
+
+    var a = +inputA.value;
+    var b = +inputB.value;
+
+    var sum = a + b;
+
+    alert(sum);
+}
+
+</script>
+
+</body>
+</html>
